@@ -11,7 +11,7 @@
             </div>
             <div v-if="item.icon" class="media-left">
               <figure class="image is-48x48">
-                <i style="font-size: 35px;" :class="['fa-fw', item.icon]"></i>
+                <i class="thirty-five" :class="['fa-fw', item.icon]"></i>
               </figure>
             </div>
             <div class="media-content">
@@ -24,7 +24,7 @@
           </div>
           <div
             v-on:click="filterTag()"
-            class="tag"
+            class="tag is-clickable"
             :class="item.tagstyle"
             v-if="item.tag"
           >
