@@ -12,7 +12,11 @@ export default {};
 
 <template>
   <div>
-    <div class="card" :class="item.class">
+    <div
+      class="card"
+      :style="`background-color:${item.background};`"
+      :class="item.class"
+    >
       <a
         :href="item.url"
         class="linkoverlay"
