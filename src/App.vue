@@ -41,6 +41,7 @@
         <SearchInput
           class="navbar-item is-inline-block-mobile"
           @input="filterServices"
+          :value="filter"
           @search-focus="showMenu = true"
           @search-open="navigateToFirstService"
           @search-cancel="filterServices"
@@ -69,6 +70,7 @@
                 v-for="item in group.items"
                 :key="item.name"
                 v-bind:item="item"
+                @filter="filterTag"
                 :class="['column', `is-${12 / config.columns}`]"
               />
             </template>
@@ -91,6 +93,7 @@
               <Service
                 v-for="item in group.items"
                 v-bind:item="item"
+                @filter="filterTag"
                 :key="item.url"
               />
             </div>
@@ -212,6 +215,35 @@ export default {
       } catch (error) {
         console.warning("fail to open service");
       }
+    },
+    filterTag: function (filter) {
+      this.showMenu = true;
+      this.$nextTick(() => {
+        document.getElementById("searchBox").focus();
+      });
+      this.filter = filter;
+
+      if (!filter) {
+        this.services = this.config.services;
+        return;
+      }
+
+      const searchResultItems = [];
+      for (const group of this.config.services) {
+        for (const item of group.items) {
+          if (this.matchesFilter(item)) {
+            searchResultItems.push(item);
+          }
+        }
+      }
+
+      this.services = [
+        {
+          name: filter,
+          icon: "fas fa-search",
+          items: searchResultItems,
+        },
+      ];
     },
     filterServices: function (filter) {
       this.filter = filter;
